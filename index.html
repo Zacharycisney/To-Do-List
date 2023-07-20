@@ -253,11 +253,16 @@
 
             let input = prompt("What is your new task that you would like to add to the To-Do list?", "Ex. Call your Doctor")
 
+            if (input == ''){
+                alert("Please make a valid entry")
+            }
+            else{
             const newTask = { task: input, status: 0 } //create object
 
             List.push(newTask) //add to array
 
             display() //update page
+            }
 
         }
         // function finished
@@ -299,8 +304,13 @@
         function updateChangesButton(){ 
             // this functino reaffirms to the user that the changes were recieved
 
-            updateChanges()
-            alert("List Updated")
+            if (List.length == 0) {
+                alert("List is empty")
+            }
+            else {
+                updateChanges()
+                alert("List Updated")
+            }
 
         }
         //function finished
