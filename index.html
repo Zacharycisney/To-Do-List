@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        .redDash{
+        /* for spacing */
+        border: 2px dashed rgba(255, 0, 0, 0.822);
+        }
+
+        .bckgrnd{
+            background-color: rgb(17, 17, 17);
+            background-size: cover;
+        }
+
+        .title, .button{
+            border-radius: .35rem;
+            border: solid green;
+            background-color: green;
+            color: white;
+        }
+
+    </style>
+</head>
+
+<body class="bckgrnd text-white">
+
+
+        <header class="d-flex justify-content-center">
+            <h1 class="title d-inline-flex mt-4 mb-2 px-3 py-2">To-Do List</h1>
+        </header>
+
+
+        <main class="contianer bg-dark d-flex justify-content-center">
+            <div class="container m-3" style="width: 1200px;">
+                <div class="row">
+
+
+                    <!-- left 2/3 of page  -->
+                    <div class="ps-5 py-3 col-lg-8 order-lg-1 order-lg-1 order-2">
+
+                        <!-- Title of Cols -->
+                        <header class="row row-cols-2 ">
+
+                            <h4 class="col">Status</h4>
+
+                            <h4 class="col">Item</h4>
+
+                        </header>
+
+
+                        <!-- Task list -->
+                        <section class="row row-cols-2 py-3" id="list">
+
+
+                            <div class="col">
+                                <select name="status" id="status" size="1">
+                                    <option value="1">Completed</option>
+                                    <option value="0"></option>
+                                    <option value="2">Pending</option>
+                                    <option value="3">Incomplete</option>
+                                </select>
+                            </div>
+
+
+
+                            <h6 class="col">Ex. Walk the dog</h6>
+
+
+                            <div class="col">
+                                <select name="status" id="status" size="1">
+                                    <option value="3">Incomplete</option>
+                                    <option value="0"></option>
+                                    <option value="1">Completed</option>
+                                    <option value="2">Pending</option>
+                                </select>
+                            </div>
+
+
+                            <h6 class="col">Ex. Take out garbage</h6>
+
+
+                            <div class="col">
+                                <select name="status" id="status" size="1">
+                                    <option value="2">Pending</option>
+                                    <option value="0"></option>
+                                    <option value="1">Completed</option>
+                                    <option value="3">Incomplete</option>
+                                </select>
+                            </div>
+
+
+                            <h6 class="col">Ex. Go to work</h6>
+
+
+                        </section>
+
+
+                        <!-- Forms update button -->
+                        <footer>
+                            <h6 class="p-1 col button" style="width: 140px;" onclick="updateChangesButton()"> Update Changes </h6>
+                        </footer>
+                    </div>
+                    <!-- End of left 2/3 -->
+
+
+
+
+                    <!-- right 1/3 of page -->
+                    <div class="pt-3 col-lg-4 order-lg-2 ">
+                        <aside class="row row-col-2 d-flex justify-content-center">
+                            <h6 class="p-1 col button d-inline-flex justify-content-center" onclick="createTask()"> Add New Task </h6>
+
+                            <div class="col row-col-2" style="float: inline-end">
+                                <label class="ps-2"> Filters: </label>
+                                <select id="filterSelect" size="1">
+                                    <option value="0">(Pick One)</option>
+                                    <option value="1">Completed</option>
+                                    <option value="2">Pending</option>
+                                    <option value="3">Incomplete</option>
+                                    <option value="4">All Tasks</option>
+                                </select>
+                            </div>
+                        </aside>
+
+                        <h6 class="mt-3 me-2 p-3 d-flex" style="background-color: rgb(26, 26, 26);">Note: After adding a task to the list you are able to edit that task by clicking on it dirrectly. </h6>
+
+                    </div> 
+                    <!-- End of right 1/3 -->
+
+
+
+                </div>
+            </div>
+
+
+        </main>
+
+
+
+
+
+
+    <script>
+
+        //Array list
+        const List = []
+
+        // ##############################
+        //     Task Status Key (below)
+        //     0: blank
+        //     1: Completed
+        //     2: Pending
+        //     3: Incomplete
+        //     4: Delete
+        // ##############################
+
+
+
+
+
+        function display() {
+
+            let loadList = document.getElementById('list') //set up for printout
+            let html = ''
+
+
+            for (i = 0; i < List.length; i++) {
+
+                //Changes the forms options
+                html += statusSwap()
+
+                //Prints task
+                html += `<h6 class="col py-1" id="task${i}" contentEditable="true">${List[i].task}</h6>`
+
+            }
+
+            loadList.innerHTML = html //takes all compiled html strings and substitutes
+
+
+        }
+        // function finished
+
+
+        function statusSwap(curr) {
+
+            if (List[i].status == 1) {
+                return `<div class="col py-1">
+                        <select name="status" id="status${i}" size="1">
+                            <option value="1">Completed</option>
+                            <option value="2">Pending</option>
+                            <option value="3">Incomplete</option>
+                            <option value="4">Delete</option>
+                        </select>
+                    </div>`
+
+            }
+            else if (List[i].status == 2) {
+
+                return `<div class="col py-1">
+                        <select name="status" id="status${i}" size="1">
+                            <option value="2">Pending</option>
+                            <option value="1">Completed</option>
+                            <option value="3">Incomplete</option>
+                            <option value="4">Delete</option>
+                        </select>
+                    </div>`
+
+            }
+            else if (List[i].status == 3) {
+                return `<div class="col py-1">
+                        <select name="status" id="status${i}" size="1">
+                            <option value="3">Incomplete</option>
+                            <option value="1">Completed</option>
+                            <option value="2">Pending</option>
+                            <option value="4">Delete</option>
+                        </select>
+                    </div>`
+
+            }
+            else if (List[i].status == 0) {
+                return `<div class="col py-1">
+                        <select name="status" id="status${i}" size="1">
+                            <option value="0"></option>
+                            <option value="1">Completed</option>
+                            <option value="2">Pending</option>
+                            <option value="3">Incomplete</option>
+                            <option value="4">Delete</option>
+                        </select>
+                    </div>`
+            }
+            else {
+                return `Something is wrong`
+            }
+
+        }
+        // function finished
+
+
+        function createTask() {
+
+            updateChanges() //prevents user from loosing changes
+
+        // ----------------------------------------------------------------------- //     
+
+
+            let input = prompt("What is your new task that you would like to add to the To-Do list?", "Ex. Call your Doctor")
+
+            const newTask = { task: input, status: 0 } //create object
+
+            List.push(newTask) //add to array
+
+            display() //update page
+
+        }
+        // function finished
+
+
+        function updateChanges() {
+            for (i = 0; i < List.length; i++) {
+
+                //update status
+                var value = document.getElementById("status" + i).value
+
+
+                if (value == 4) { //deletes task
+                    List.splice(i, i+1)
+                    // List.splice(i)
+
+
+                } 
+
+                else {
+                    List[i].status = value //set array correctly 
+
+
+                    //update task
+                    var editedTask = document.getElementById("task" + i).innerHTML
+
+                    List[i].task = editedTask
+                }
+
+            }
+
+            var editedTask = document
+
+            display()
+        }
+        // function finished        
+
+
+        function updateChangesButton(){ 
+            // this functino reaffirms to the user that the changes were recieved
+
+            updateChanges()
+            alert("List Updated")
+
+        }
+        //function finished
+
+
+        function filter() {
+
+            updateChanges() //This prevents user from accidently loosing updates
+
+
+        // ----------------------------------------------------------------------- //
+
+            //Load all values and locations
+            let loadList = document.getElementById('list')
+            let html = ''
+
+            var filterNum = document.getElementById("filterSelect").value
+
+        // ----------------------------------------------------------------------- //
+
+
+
+            if (filterNum == 0 || filterNum == 4) {
+                display()
+            }
+
+            else {
+                for (i = 0; i < List.length; i++) {
+
+                    if (List[i].status == filterNum) {
+                        //Changes the forms options
+                        html += statusSwap()
+
+                        //Prints task
+                        html += `<h6 class="col">${List[i].task}</h6>`
+                    }
+                }
+
+                loadList.innerHTML = html //takes all compiled html strings and substitutes
+            }
+
+
+        }
+
+
+
+        document.getElementById("filterSelect").addEventListener("change", filter)
+
+    </script>
+
+</body>
+
+</html>
